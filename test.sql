@@ -108,17 +108,17 @@ SELECT user_id, MAX(order_date) AS latest_order_date
 FROM orders 
 GROUP BY user_id;
 
--- 設問21) 新規ユーザー「中村愛（25歳・女性・2025-06-01作成）」をusersテーブルに追加するSQL
-INSERT INTO users (name, age, gender, created_at) VALUES ('中村愛', 25, 'female', '2025-06-01');
+-- 設問21) 新規ユーザー「中村愛（25歳・女性・2025-06-01作成）」をusersテーブルに追加するSQL 【修正版：idを直接指定】
+INSERT INTO users (id, name, age, gender, created_at) VALUES (4, '中村愛', 25, 'female', '2025-06-01');
 
--- 設問22) 商品「エアコン（価格：60000円）」をproductsテーブルに追加するSQL
-INSERT INTO products (product_name, price) VALUES ('エアコン', 60000);
+-- 設問22) 商品「エアコン（価格：60000円）」をproductsテーブルに追加するSQL 【修正版：idを直接指定】
+INSERT INTO products (id, product_name, price) VALUES (6, 'エアコン', 60000);
 
 -- 設問23) ユーザーIDが1の人が2025-06-10に行った新しい注文（orders）を追加するSQL。注文IDは10とします。
 INSERT INTO orders (id, user_id, order_date) VALUES (10, 1, '2025-06-10');
 
--- 設問24) 上記の注文（注文ID:10）に対して、「エアコン（商品ID:6）」を1つ購入したことを表すorder_itemsを追加してください。
-INSERT INTO order_items (order_id, product_id, quantity) VALUES (10, 6, 1);
+-- 設問24) 上記の注文（注文ID:10）に対して、「エアコン（商品ID:6）」を1つ購入したことを表すorder_itemsを追加してください。 【修正版：主キーのidを直接指定】
+INSERT INTO order_items (id, order_id, product_id, quantity) VALUES (6, 10, 6, 1);
 
 -- 設問25) ユーザー「田中美咲」の年齢を23歳から24歳に更新するSQL
 UPDATE users SET age = 24 WHERE name = '田中美咲';
@@ -129,8 +129,7 @@ UPDATE products SET price = price * 1.1;
 -- 設問27) 2024年5月以前（5月1日より前（4月末まで））に行われた注文（orders）のorder_dateをすべて「2024-05-01」に統一する（更新する）SQL
 UPDATE orders SET order_date = '2024-05-01' WHERE order_date < '2024-05-01';
 
--- 設問28) ユーザー名が「高橋健一」のレコードをusersテーブルから削除するSQL
-UPDATE orders SET user_id = NULL WHERE user_id = (SELECT id FROM users WHERE name = '高橋健一');
+-- 設問28) ユーザー名が「高橋健一」のレコードをusersテーブルから削除するSQL 【修正版：外部キーの余計なUPDATE文を削除】
 DELETE FROM users WHERE name = '高橋健一';
 
 -- 設問29) 注文IDが5の明細（order_items）をすべて削除するSQL
